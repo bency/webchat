@@ -1,6 +1,7 @@
 <template>
   <!-- <HelloWorld msg="Welcome to Your Vue.js App" /> -->
   {{ uuid() }}
+  <button @click="startChat()">開始聊天</button>
 </template>
 
 <script>
@@ -43,6 +44,8 @@ export default {
     });
   },
   setup: () => {
+    function startChat() {
+    }
     function uuid() {
       let uuid = window.localStorage.getItem("uuid");
       if (uuid) {
