@@ -1,14 +1,15 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App" />
+  <!-- <HelloWorld msg="Welcome to Your Vue.js App" /> -->
+  {{ uuid() }}
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+// import HelloWorld from './components/HelloWorld.vue'
+// import { uuid } from '.components/TheHelpers'
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getDatabase } from "firebase/database";
+import { getDatabase, ref, update, onValue } from "firebase/database";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -25,14 +26,21 @@ const firebaseConfig = {
   measurementId: "G-4M1R71FK77"
 };
 const app = initializeApp(firebaseConfig);
-const database = getDatabase(app);
 
 // Initialize Firebase
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    // HelloWorld
+  },
+  mounted() {
+    const db = getDatabase(app);
+    this.joinLivingRoom(this.uuid());
+    onValue(ref(db, '/livingroom'), (snapshot) => {
+      const data = snapshot.val();
+      console.log('data', Array.prototype.keys(data));
+    });
   },
   setup: () => {
     function uuid() {
@@ -57,6 +65,15 @@ export default {
       );
       window.localStorage.setItem("uuid", uuid);
       return uuid;
+    }
+    function joinLivingRoom(uuid) {
+      const db = getDatabase(app);
+      const path = `livingroom/` + uuid;
+      // const uuid = uuid();
+      const updates = {};
+      updates['online_at'] = (new Date()).getTime();
+      updates['is_online'] = true;
+      update(ref(db, path), updates);
     }
     return {
       uuid,
