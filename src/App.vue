@@ -1,12 +1,12 @@
 <template>
   <!-- <HelloWorld msg="Welcome to Your Vue.js App" /> -->
   {{ uuid() }}
-  <button @click="startChat()">開始聊天</button>
+  <button class="btn btn-primary" @click="startChat()">開始聊天</button>
 </template>
 
 <script>
 // import HelloWorld from './components/HelloWorld.vue'
-// import { uuid } from '.components/TheHelpers'
+import { uuid, startChat } from './components/TheHelpers.js'
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
@@ -44,31 +44,6 @@ export default {
     });
   },
   setup: () => {
-    function startChat() {
-    }
-    function uuid() {
-      let uuid = window.localStorage.getItem("uuid");
-      if (uuid) {
-        return uuid;
-      }
-      let d = Date.now();
-      if (
-        typeof performance !== "undefined" &&
-        typeof performance.now === "function"
-      ) {
-        d += performance.now(); //use high-precision timer if available
-      }
-      uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
-        /[xy]/g,
-        function (c) {
-          let r = (d + Math.random() * 16) % 16 | 0;
-          d = Math.floor(d / 16);
-          return (c === "x" ? r : (r & 0x3) | 0x8).toString(16);
-        }
-      );
-      window.localStorage.setItem("uuid", uuid);
-      return uuid;
-    }
     function joinLivingRoom(uuid) {
       const db = getDatabase(app);
       const path = `livingroom/` + uuid;
@@ -80,6 +55,7 @@ export default {
     }
     return {
       uuid,
+      startChat,
       joinLivingRoom,
     }
   }
