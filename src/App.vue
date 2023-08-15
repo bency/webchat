@@ -31,7 +31,8 @@ const app = initializeApp(firebaseConfig);
 
 // Initialize Firebase
 
-const joinLivingRoom = (uuid) => {
+const joinLivingRoom = () => {
+  const uuid = uuid();
   const db = getDatabase(app);
   const path = `livingroom${uuid}`;
   const updates = {};
@@ -39,10 +40,10 @@ const joinLivingRoom = (uuid) => {
   updates['is_online'] = true;
   update(ref(db, path), updates);
 }
-  
+
 onMounted(() => {
   const db = getDatabase(app);
-  this.joinLivingRoom(this.uuid());
+  joinLivingRoom();
   onValue(ref(db, '/livingroom'), (snapshot) => {
     const data = snapshot.val();
     console.log('data', Array.prototype.keys(data));
