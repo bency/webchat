@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, update, onValue } from "firebase/database";
-import useOnlineStore from '../pinia/useOnlineStore';
+import { useOnlineStore } from '../pinia/useOnlineStore';
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
