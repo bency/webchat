@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, update, onValue } from "firebase/database";
+import useOnlineStore from '../pinia/useOnlineStore';
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -16,6 +17,8 @@ const firebaseConfig = {
 };
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
+
+const onlineStore = useOnlineStore();
 
 export function getDb() {
   return db;
@@ -62,5 +65,6 @@ export function monitorLivingRoom() {
   onValue(ref(db, "/livingroom"), (snapshot) => {
     const data = snapshot.val();
     console.log("data", Object.keys(data));
+    onlineStore.setOnlineCount(Object.keys(data).length);
   });
 }
