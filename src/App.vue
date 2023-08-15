@@ -4,7 +4,8 @@
   <button class="btn btn-primary" @click="startChat()">開始聊天</button>
 </template>
 
-<script>
+<script setup>
+import { onMounted } from 'vue';
 // import HelloWorld from './components/HelloWorld.vue'
 import { uuid, startChat } from './components/TheHelpers.js'
 
@@ -30,36 +31,23 @@ const app = initializeApp(firebaseConfig);
 
 // Initialize Firebase
 
-export default {
-  name: 'App',
-  components: {
-    // HelloWorld
-  },
-  mounted() {
-    const db = getDatabase(app);
-    this.joinLivingRoom(this.uuid());
-    onValue(ref(db, '/livingroom'), (snapshot) => {
-      const data = snapshot.val();
-      console.log('data', Array.prototype.keys(data));
-    });
-  },
-  setup: () => {
-    function joinLivingRoom(uuid) {
-      const db = getDatabase(app);
-      const path = `livingroom/` + uuid;
-      // const uuid = uuid();
-      const updates = {};
-      updates['online_at'] = (new Date()).getTime();
-      updates['is_online'] = true;
-      update(ref(db, path), updates);
-    }
-    return {
-      uuid,
-      startChat,
-      joinLivingRoom,
-    }
-  }
+const joinLivingRoom = (uuid) => {
+  const db = getDatabase(app);
+  const path = `livingroom${uuid}`;
+  const updates = {};
+  updates['online_at'] = (new Date()).getTime();
+  updates['is_online'] = true;
+  update(ref(db, path), updates);
 }
+  
+onMounted(() => {
+  const db = getDatabase(app);
+  this.joinLivingRoom(this.uuid());
+  onValue(ref(db, '/livingroom'), (snapshot) => {
+    const data = snapshot.val();
+    console.log('data', Array.prototype.keys(data));
+  });
+});
 </script>
 
 <style>
