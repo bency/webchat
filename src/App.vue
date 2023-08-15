@@ -20,10 +20,14 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
+import { computed, onMounted } from 'vue';
 // import HelloWorld from './components/HelloWorld.vue'
 import { monitorLivingRoom, joinLivingRoom, userUid } from './components/TheHelpers.js'
-let onlineCount = 0;
+import { useOnlineStore } from './pinia/useOnlineStore';
+
+const onlineStore = useOnlineStore();
+
+const onlineCount = computed(() => onlineStore.getOnlineCount());
 
 onMounted(() => {
   joinLivingRoom(userUid());
