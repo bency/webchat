@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, update, onValue } from "firebase/database";
-import pinia from '../pinia/store';
-import { useOnlineStore } from '../pinia/useOnlineStore';
+import pinia from "../pinia/store";
+import { useOnlineStore } from "../pinia/useOnlineStore";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -26,9 +26,9 @@ export function getDb() {
 }
 
 export function userUid() {
-  let uuid = window.localStorage.getItem("userUid") || uuid();
-  window.localStorage.setItem("userUid", uuid);
-  return uuid;
+  let userUid = window.localStorage.getItem("userUid") || uuid();
+  window.localStorage.setItem("userUid", userUid);
+  return userUid;
 }
 
 export function uuid() {
