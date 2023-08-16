@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, update, onValue } from "firebase/database";
+import pinia from '../pinia/store';
 import { useOnlineStore } from '../pinia/useOnlineStore';
 
 // Your web app's Firebase configuration
@@ -18,7 +19,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-const onlineStore = useOnlineStore();
+const onlineStore = useOnlineStore(pinia);
 
 export function getDb() {
   return db;
