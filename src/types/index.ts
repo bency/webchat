@@ -1,6 +1,8 @@
-export type ImageSize = {
-    width: number;
-    height: number;
-}
+import type { ImageSize, ImageType } from './image'
+import type { Profile } from './profile';
 
-export type ImageType = '.jpg' | '.webp' | '.png';
+export type {
+    ImageSize,
+    ImageType,
+    Profile,
+}
