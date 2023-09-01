@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import type { Profile } from '../types';
-import Avatar from './Avatar';
+import { Avatar } from '../stories/Avatar';
 
 const Card = styled.div`
     width: 100%;
@@ -41,10 +41,7 @@ function MiniProfile ({ profile }: { profile: Profile}) {
                 <Header>
                     <Avatar
                         url={profile.avatar}
-                        size={{
-                            width: profile.imageSize,
-                            height: profile.imageSize,
-                        }}
+                        size={44}
                     />
                 </Header>
                 <Body>
