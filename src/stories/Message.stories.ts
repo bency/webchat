@@ -15,3 +15,10 @@ export const Default: Story = {
         message: 'Hello World!',
     },
 };
+
+export const Partner: Story = {
+    args: {
+        partner: true,
+        message: 'Hello World!',
+    },
+}
